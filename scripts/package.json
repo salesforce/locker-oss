@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@locker/scripts",
+  "version": "0.12.13",
+  "description": "Locker scripts",
+  "bin": {
+    "locker-trash": "./locker-trash.mjs"
+  }
+}
