@@ -1,5 +1,4 @@
-import type { NodePath } from '@babel/core';
-import type * as BabelTypes from '@babel/types';
+import type { NodePath, types as BabelTypes } from '@babel/core';
 
 import { initState } from './state';
 import { locationAssignTransform } from './transforms/location-assign';
@@ -39,7 +38,7 @@ export function transformUnforgeables() {
                     topMemberTransformBuilder,
                 ]);
             },
-            Identifier(path: NodePath<BabelTypes.Identifier>) {
+            Identifier(path: NodePath<BabelTypes.Node>) {
                 // Only transform `location = value` and `location += value`.
                 if (isLocation(path) && isLeftOfAssignment(path) && isGlobalIdentifier(path)) {
                     const parent = path.parent as BabelTypes.AssignmentExpression;
@@ -49,7 +48,7 @@ export function transformUnforgeables() {
                             operator === '='
                                 ? locationAssignTransformBuilder
                                 : locationConcatTransformBuilder;
-                        const { parentPath } = path;
+                        const parentPath = path.parentPath!;
                         // Both transform variations have the same placeholder
                         // replacements.
                         parentPath.replaceWith(builder({ VALUE: parent.right }));
@@ -72,7 +71,7 @@ export function transformUnforgeables() {
                                 operator === '='
                                     ? locationMemberAssignTransformBuilder
                                     : locationMemberConcatTransformBuilder;
-                            const { parentPath } = path;
+                            const parentPath = path.parentPath!;
                             if (!builder.isTransformed(parentPath)) {
                                 // Both transform variations have the same
                                 // placeholder replacements.

@@ -1,5 +1,4 @@
-import type { NodePath } from '@babel/core';
-import type * as BabelTypes from '@babel/types';
+import type { NodePath, types as BabelTypes } from '@babel/core';
 import { partial } from 'match-json';
 
 import { Builder } from '../builder';

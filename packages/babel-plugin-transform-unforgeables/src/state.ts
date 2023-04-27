@@ -1,7 +1,6 @@
-import type { NodePath } from '@babel/core';
+import type { NodePath, types as BabelTypes } from '@babel/core';
 import { types as t } from '@babel/core';
 import type { Binding, Scope } from '@babel/traverse';
-import type * as BabelTypes from '@babel/types';
 
 import type { BuilderClass, BuilderPluginState, Identifier, PrivatePluginState } from './types';
 import { generateUid, getAllBindingNames as _getAllBindingNames } from './util';
@@ -55,7 +54,10 @@ function createBuilderPluginState(
                     // Lazily inject on retrieval of replacement value to inject
                     // only when needed.
                     injected.add(idName);
-                    programScope.push({ id, init: t.identifier(globalName) });
+                    programScope.push({
+                        id,
+                        init: t.identifier(globalName),
+                    });
                 }
             }
             return id;

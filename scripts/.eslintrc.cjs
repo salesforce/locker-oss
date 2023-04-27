@@ -6,11 +6,16 @@ module.exports = {
     env: {
         node: true,
     },
-    rules: {
-        'import/no-extraneous-dependencies': [
-            'error',
-            // Use package.json from root
-            { packageDir: [path.join(__dirname, '..')] },
-        ],
-    },
+    overrides: [
+        {
+            files: ['**/*.*'],
+            rules: {
+                'import/no-extraneous-dependencies': [
+                    'error',
+                    // Use package.json from both this package folder and root.
+                    { packageDir: [__dirname, path.join(__dirname, '..')] },
+                ],
+            },
+        },
+    ],
 };

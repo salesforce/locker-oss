@@ -702,6 +702,35 @@ describe('Babel transformation', () => {
             expect(stripOutput(transformed.code)).toBe(stripOutput(expectedOutput));
         });
 
+        it('skips destructured local location bindings', () => {
+            const inputCode = `
+                function updateUrlFromState(state) {
+                    const { location, details } = state;
+                    if (details.foo) {
+                        location.href = '...';
+                    }
+                    window.location = location.href;
+                }
+            `;
+            const expectedOutput = `
+                var _location = location;
+                function updateUrlFromState(state) {
+                    const {
+                        location,
+                        details
+                    } = state;
+                    if (details.foo) {
+                        location.href = '...';
+                    }
+                    (window === globalThis || window === document ? _location.assign(location.href) : window.location = location.href);
+                }
+            `;
+            const transformed = transformSync(inputCode, {
+                plugins: [unforgeablesPlugin()],
+            });
+            expect(stripOutput(transformed.code)).toBe(stripOutput(expectedOutput));
+        });
+
         it('renames shadowed globals', () => {
             const transformed = transformSync(shadowedLocationPatternsInput, {
                 plugins: [unforgeablesPlugin()],

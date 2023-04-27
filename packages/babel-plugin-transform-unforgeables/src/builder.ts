@@ -1,6 +1,5 @@
-import type { NodePath } from '@babel/core';
+import type { NodePath, types as BabelTypes } from '@babel/core';
 import { template as templateBuilder, types as t } from '@babel/core';
-import type * as BabelTypes from '@babel/types';
 
 import type {
     BuilderClass,

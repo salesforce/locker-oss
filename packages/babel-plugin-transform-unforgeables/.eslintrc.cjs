@@ -10,7 +10,7 @@ module.exports = {
                 'import/no-extraneous-dependencies': [
                     'error',
                     // Use package.json from both this package folder and root.
-                    { packageDir: [__dirname, path.join(__dirname, '../../..')] },
+                    { packageDir: [__dirname, path.join(__dirname, '../..')] },
                 ],
             },
         },

@@ -1,10 +1,9 @@
-import type { NodePath, Visitor } from '@babel/core';
+import type { NodePath, types as BabelTypes, Visitor } from '@babel/core';
 import { types as t } from '@babel/core';
 // Import `CodeGenerator` alias instead of the default `generate` export for
 // interoperability with the .mjs distribution build.
 import { CodeGenerator } from '@babel/generator';
 import type { Scope } from '@babel/traverse';
-import type * as BabelTypes from '@babel/types';
 
 const BABEL_GENERATE_OPTIONS = {
     comments: false,
@@ -27,7 +26,6 @@ function generateCode(ast: BabelTypes.Node): string {
     // This lets us deeply compare nodes in a way that ignores extraneous properties,
     // like location and other metadata. This method is performance HEAVY so we
     // try to call it last AFTER performing lighter checks first.
-    // @ts-ignore: '@babel/generator' expects a different instance of '@babel/types' Node.
     const gen = new CodeGenerator(ast, BABEL_GENERATE_OPTIONS);
     return gen.generate().code;
 }
