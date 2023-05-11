@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const { rollupConfig } = require('scripts/rollup/configs/next.cjs');
+const { rollupConfig } = require('@locker/scripts/rollup/configs/next.cjs');
 
 const packageJSON = fs.readJSONSync('package.json');
 
