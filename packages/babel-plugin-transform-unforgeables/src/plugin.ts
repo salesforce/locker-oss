@@ -24,7 +24,7 @@ export function transformUnforgeables() {
     const locationMemberConcatTransformBuilder = locationMemberConcatTransform();
     const topMemberTransformBuilder = topMemberTransform();
     return {
-        name: '@locker/babel-plugin-transform-unforgeables',
+        name: 'babel-plugin-transform-unforgeables',
         visitor: {
             // Program() { ... } is shorthand for Program: { enter() { ... } }
             // and is visited first.
