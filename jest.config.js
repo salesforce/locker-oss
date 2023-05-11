@@ -5,7 +5,7 @@ module.exports = {
     coverageDirectory: 'jest-coverage/json/',
     coverageReporters: ['json'],
     moduleNameMapper: {
-        '^@locker/(near-membrane-\\w+)$': '<rootDir>/packages/$1/src',
+        '^@locker/(\\w+)$': '<rootDir>/packages/$1/src',
     },
     roots: [
         '<rootDir>/packages/babel-plugin-transform-unforgeables',
