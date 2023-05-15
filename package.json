@@ -1,5 +1,5 @@
 {
-  "name": "@locker/locker-oss",
+  "name": "locker-multipack",
   "description": "JavaScript Open Source Library for Locker packages",
   "license": "MIT",
   "private": true,

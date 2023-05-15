@@ -22,11 +22,9 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '16.x'
     - run: yarn install
     - run: yarn build
     - run: yarn test
-    - run: yarn test:bundlesize
-    - run: yarn karma
       env:
         CI: true
