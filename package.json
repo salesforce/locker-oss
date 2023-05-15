@@ -1,5 +1,5 @@
 {
-  "name": "locker-oss",
+  "name": "@locker",
   "description": "JavaScript Open Source Library for Locker packages",
   "license": "MIT",
   "private": true,
