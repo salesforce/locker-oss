@@ -1,5 +1,5 @@
 {
-    "name": "babel-plugin-transform-unforgeables",
+    "name": "@locker/babel-plugin-transform-unforgeables",
     "version": "0.1.1",
     "license": "SEE LICENSE IN LICENSE.txt",
     "author": "Salesforce UI Security Team",
