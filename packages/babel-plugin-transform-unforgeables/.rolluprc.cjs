@@ -12,4 +12,10 @@ module.exports = rollupConfig({
     output: {
         exports: 'default',
     },
+    plugins: [
+        nodeResolve({
+            dedupe: () => true,
+            preferBuiltins: true,
+        })
+    ],
 });
