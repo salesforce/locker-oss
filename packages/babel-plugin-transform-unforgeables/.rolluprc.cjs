@@ -8,8 +8,14 @@ const packageJSON = fs.readJSONSync('package.json');
 
 module.exports = rollupConfig({
     copyrightYear: '2023',
-    external: /node_modules/,
+    external: [/node_modules/, ...Object.keys(packageJSON.dependencies)],
     output: {
         exports: 'default',
     },
+    plugins: [
+        nodeResolve({
+            dedupe: () => true,
+            preferBuiltins: true,
+        })
+    ],
 });
