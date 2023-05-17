@@ -8,7 +8,7 @@ const packageJSON = fs.readJSONSync('package.json');
 
 module.exports = rollupConfig({
     copyrightYear: '2023',
-    external: /node_modules/,
+    external: [/node_modules/, "match-json"],
     output: {
         exports: 'default',
     },
