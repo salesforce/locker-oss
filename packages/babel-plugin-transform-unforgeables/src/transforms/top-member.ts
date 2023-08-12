@@ -2,7 +2,19 @@ import type { NodePath, types as BabelTypes } from '@babel/core';
 import { partial } from 'match-json';
 
 import { Builder } from '../builder';
-import { isDoubleOrTripleEquals, isNodeEquals } from '../util';
+import { isDoubleOrTripleEquals, isNodeEquals, isTopProperty } from '../util';
+
+function getTopObject(path: NodePath<BabelTypes.MemberExpression>): BabelTypes.Node {
+    let currPath;
+    let nextPath = path;
+    do {
+        currPath = nextPath;
+        // Walk into nested top member expressions like
+        // window.top.top -> window.top -> window
+        nextPath = currPath.get('object') as NodePath<any>;
+    } while (isTopProperty(nextPath));
+    return currPath.node.object;
+}
 
 export const topMemberTransform = () =>
     // Used to replace the pattern:
@@ -16,7 +28,7 @@ export const topMemberTransform = () =>
             globals: { GLOBAL_THIS: 'globalThis', TOP: 'top' },
             validator(this: typeof Builder, path: NodePath<BabelTypes.MemberExpression>): boolean {
                 const { node: memberExpr } = path;
-                const { object } = memberExpr;
+                const object = getTopObject(path);
                 const conditionalExpr = path.parent as BabelTypes.ConditionalExpression;
                 const binaryEpr = conditionalExpr.test as BabelTypes.BinaryExpression;
                 return (
@@ -49,7 +61,7 @@ export const topMemberTransform = () =>
                     // Then, a deep comparison:
                     // NODE === GLOBAL_THIS ? TOP : NODE.top
                     // ^----------------------------^
-                    isNodeEquals(binaryEpr.left, memberExpr.object)
+                    isNodeEquals(binaryEpr.left, object)
                 );
             },
         }

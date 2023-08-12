@@ -126,18 +126,16 @@ export function isLeftOfAssignment(path: NodePath<BabelTypes.Node>): boolean {
     );
 }
 
-export function isLocation(path: NodePath<BabelTypes.Node>): boolean {
-    const subpath = path.isMemberExpression()
-        ? (path.get('property') as NodePath<BabelTypes.Node>)
-        : path;
-    return subpath.isIdentifier({ name: 'location' });
+export function isLocationIdentifier(path: NodePath<BabelTypes.Node>): boolean {
+    return path.isIdentifier({ name: 'location' });
 }
 
-export function isTop(path: NodePath<BabelTypes.Node>): boolean {
-    const subpath = path.isMemberExpression()
-        ? (path.get('property') as NodePath<BabelTypes.Node>)
-        : /* istanbul ignore next: currently unreachable via tests */ path;
-    return subpath.isIdentifier({ name: 'top' });
+export function isLocationProperty(path: NodePath<BabelTypes.Node>): boolean {
+    return path.isMemberExpression() && path.get('property').isIdentifier({ name: 'location' });
+}
+
+export function isTopProperty(path: NodePath<BabelTypes.Node>): boolean {
+    return path.isMemberExpression() && path.get('property').isIdentifier({ name: 'top' });
 }
 
 export function isWithinUpdateExpression(path: NodePath<any>): boolean {
