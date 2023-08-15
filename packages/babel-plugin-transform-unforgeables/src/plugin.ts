@@ -58,7 +58,6 @@ export function transformUnforgeables() {
                         // replacements.
                         parentPath.replaceWith(builder({ VALUE: parent.right }));
                         parentPath.skip();
-                        path.skip();
                     }
                 }
             },
@@ -107,7 +106,6 @@ export function transformUnforgeables() {
                                     })
                                 );
                                 parentPath.skip();
-                                path.skip();
                             }
                         }
                     } else if (
@@ -149,6 +147,7 @@ export function transformUnforgeables() {
                                 NODE: currPath.node.object,
                             })
                         );
+                        path.skip();
                     }
                 }
             },
