@@ -374,7 +374,7 @@ describe('Babel transformation', () => {
         const nestedShadowedLocationPatternsOutput = `
             var _document2 = document,
                 _globalThis2 = globalThis,
-               _location2 = location;
+                _location2 = location;
             var noInit,
                 noNode = 1,
                 $noSort = location;
@@ -423,7 +423,7 @@ describe('Babel transformation', () => {
                     (el.ownerDocument === _globalThis2 || el.ownerDocument === _document2 ? _location2.assign(_location2.href + value) : el.ownerDocument.location += value),
                     (el.ownerDocument === _globalThis2 || el.ownerDocument === _document2 ? _location2 : el.ownerDocument.location).href = value,
                     (el.ownerDocument === _globalThis2 || el.ownerDocument === _document2 ? _location2 : el.ownerDocument.location).href += value,
-                    function nestedShadowedLocationPatterns(el, value, _document, _globalThis,  _location) {
+                    function nestedShadowedLocationPatterns(el, value, _document, _globalThis, _location) {
                         return [
                             _location,
                             _location = value,
@@ -526,7 +526,7 @@ describe('Babel transformation', () => {
         const shadowedTopLevelLocationPatternsOutput = `
             var _document2 = document,
                 _globalThis2 = globalThis,
-               _location2 = location;
+                _location2 = location;
             var document = 'no',
                 globalThis = 'no',
                 location = 'no',
@@ -1549,7 +1549,7 @@ describe('Babel transformation', () => {
         const shadowedTopLevelCombinedPatternsOutput = `
             var _document2 = document,
                 _globalThis2 = globalThis,
-               _location2 = location,
+                _location2 = location,
                 _top2 = top;
             var document = 'no',
                 globalThis = 'no',
@@ -1741,7 +1741,7 @@ describe('Babel transformation', () => {
         const nestedShadowedCombinedPatternsOutput = `
             var _document2 = document,
                 _globalThis2 = globalThis,
-               _location2 = location,
+                _location2 = location,
                 _top2 = top;
             var noInit,
                 noNode = 1,
@@ -1801,7 +1801,7 @@ describe('Babel transformation', () => {
                     (parent === _globalThis2 ? _top2 : parent.top),
                     (self === _globalThis2 ? _top2 : self.top),
                     (top === _globalThis2 ? _top2 : top.top),
-                    function nestedShadowedCombinedPatterns(el, value, _document, _globalThis,  _location, _top) {
+                    function nestedShadowedCombinedPatterns(el, value, _document, _globalThis, _location, _top) {
                         return [
                             (document.defaultView === _globalThis2 || document.defaultView === _document2 ? _location2 : document.defaultView.location),
                             (document.defaultView === _globalThis2 || document.defaultView === _document2 ? _location2.assign(value) : document.defaultView.location = value),
