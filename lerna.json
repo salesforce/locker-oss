@@ -1,12 +1,12 @@
 {
-  "version": "0.20.0",
-  "npmClient": "yarn",
-  "command": {
-    "publish": {
-      "forcePublish": "*"
-    },
-    "version": {
-      "message": "release: %s"
+    "version": "0.22.0",
+    "npmClient": "yarn",
+    "command": {
+        "publish": {
+            "forcePublish": "*"
+        },
+        "version": {
+            "message": "release: %s"
+        }
     }
-  }
 }

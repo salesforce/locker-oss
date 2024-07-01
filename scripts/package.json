@@ -1,11 +1,11 @@
 {
-  "private": true,
-  "name": "scripts",
-  "version": "0.20.0",
-  "description": "Locker scripts",
-  "bin": {
-    "locker-trash": "./locker-trash.mjs",
-    "npm-deprecate-all": "./npm/npm-deprecate-all.sh",
-    "npm-deprecate": "./npm/npm-deprecate.sh"
-  }
+    "private": true,
+    "name": "scripts",
+    "version": "0.22.0",
+    "description": "Locker scripts",
+    "bin": {
+        "locker-trash": "./locker-trash.mjs",
+        "npm-deprecate-all": "./npm/npm-deprecate-all.sh",
+        "npm-deprecate": "./npm/npm-deprecate.sh"
+    }
 }
