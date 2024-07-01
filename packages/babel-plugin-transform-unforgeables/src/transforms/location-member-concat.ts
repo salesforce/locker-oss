@@ -9,7 +9,7 @@ export const locationMemberConcatTransform = () =>
     // NODE.location += VALUE
     Builder.create(
         `
-            (NODE === GLOBAL_THIS || NODE === DOCUMENT) ? LOCATION.assign(LOCATION.href + VALUE) : EXPRESSION
+            (NODE === GLOBAL_THIS || NODE === DOCUMENT) ? LOCATION.assign(LOCATION.href + VALUE) : EXPRESSION_OBJECT.EXPRESSION_PROPERTY += VALUE
         `,
         {
             name: 'locationMemberConcatTransform',

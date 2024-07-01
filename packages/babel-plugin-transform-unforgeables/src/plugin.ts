@@ -66,23 +66,23 @@ export function transformUnforgeables() {
             MemberExpression(path: NodePath<BabelTypes.MemberExpression>) {
                 const { node } = path;
                 if (isLocationProperty(path)) {
-                    const objectPath = path.get('object');
-                    // Skip transforming location in members like `window.top.location`
-                    // letting the transform to `window.top` carry it.
-                    if (isTopProperty(objectPath)) {
-                        return;
-                    }
-                    const alternatePath = objectPath.isConditionalExpression()
-                        ? objectPath.get('alternate')
-                        : undefined;
-                    // Skip re-transforming location in members like
-                    // `(window === GLOBAL_THIS ? TOP : window.top).location`.
-                    if (
-                        alternatePath &&
-                        isTopProperty(alternatePath) &&
-                        topMemberTransformBuilder.isTransformed(alternatePath)
-                    ) {
-                        return;
+                    let currentNode = node.object;
+                    // For scenarios with `window.top.location`,
+                    // We want to have nested transformations.
+                    if (isTopProperty(path.get('object'))) {
+                        let currPath;
+                        let nextPath = path;
+                        do {
+                            currPath = nextPath;
+                            currPath.skip();
+                            // Walk into nested top member expressions like
+                            // window.top.top -> window.top -> window
+                            nextPath = currPath.get('object') as NodePath<any>;
+                        } while (isTopProperty(nextPath));
+                        currentNode = topMemberTransformBuilder({
+                            EXPRESSION: node.object,
+                            NODE: currPath.node.object,
+                        });
                     }
                     if (isLeftOfAssignment(path)) {
                         const parent = path.parent as BabelTypes.AssignmentExpression;
@@ -96,12 +96,11 @@ export function transformUnforgeables() {
                             const { parentPath } = path;
                             // Skip re-transforming location.
                             if (!builder.isTransformed(parentPath)) {
-                                // Both transform variations have the same
-                                // placeholder replacements.
                                 parentPath.replaceWith(
                                     builder({
-                                        EXPRESSION: parent,
-                                        NODE: node.object,
+                                        EXPRESSION_OBJECT: currentNode,
+                                        EXPRESSION_PROPERTY: node.property,
+                                        NODE: currentNode,
                                         VALUE: parent.right,
                                     })
                                 );
@@ -116,8 +115,9 @@ export function transformUnforgeables() {
                     ) {
                         path.replaceWith(
                             locationMemberTransformBuilder({
-                                EXPRESSION: node,
-                                NODE: node.object,
+                                EXPRESSION_OBJECT: currentNode,
+                                EXPRESSION_PROPERTY: node.property,
+                                NODE: currentNode,
                             })
                         );
                         path.skip();

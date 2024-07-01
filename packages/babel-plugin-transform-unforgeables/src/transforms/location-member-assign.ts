@@ -9,7 +9,7 @@ export const locationMemberAssignTransform = () =>
     // NODE.location = VALUE
     Builder.create(
         `
-            (NODE === GLOBAL_THIS || NODE === DOCUMENT) ? LOCATION.assign(VALUE) : EXPRESSION
+            (NODE === GLOBAL_THIS || NODE === DOCUMENT) ? LOCATION.assign(VALUE) : EXPRESSION_OBJECT.EXPRESSION_PROPERTY = VALUE
         `,
         {
             name: 'locationMemberAssignTransform',
